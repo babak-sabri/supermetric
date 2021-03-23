@@ -1,5 +1,15 @@
 # supermetric test project
 
-setup:
+## setup:
+<code>
+	composer install
+</code>
 
-composer install
+## run
+you can run the code through command line
+
+<code>
+	php index.php
+</code>
+
+or setup a vhost and run it through a webpage
