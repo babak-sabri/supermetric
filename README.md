@@ -6,10 +6,10 @@
 </code>
 
 ## run
-you can run the code through command line
+### you can run the code through command line
 
 <code>
 	php index.php
 </code>
 
-or setup a vhost and run it through a webpage
+### or setup a vhost and run it through a webpage
