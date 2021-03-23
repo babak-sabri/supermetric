@@ -1,0 +1,15 @@
+{
+	"name": "supermetric/test",
+	"type": "project",
+	"description": "The Supermetric test project.",
+	"license": "MIT",
+	"require": {
+		"php": ">=7.2.0",
+		"php-di/php-di": "^6.3"
+	},
+	"autoload": {
+        "psr-4": {
+			"Supermetric\\": "Supermetric/src/"
+        }
+    }
+}
