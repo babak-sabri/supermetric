@@ -6,9 +6,27 @@ use Supermetric\Repository\PostRepositoryInterface;
 
 class SupermetricService implements SupermetricServiceInterface
 {
+	/**
+	 * 
+	 * the authentication service
+	 * 
+	 * @var AuthenticationInterface 
+	 */
 	private $auth;
+	
+	/**
+	 * 
+	 * the posts repository service
+	 * 
+	 * @var PostRepositoryInterface 
+	 */
 	private $repository;
 
+	/**
+	 * 
+	 * @param AuthenticationInterface $auth
+	 * @param PostRepositoryInterface $repository
+	 */
 	public function __construct(AuthenticationInterface $auth, PostRepositoryInterface $repository)
 	{
 		$this->auth			= $auth;
@@ -18,18 +36,27 @@ class SupermetricService implements SupermetricServiceInterface
 		);
 	}
 
+	/**
+	 * 
+	 * return the statistics
+	 * 
+	 * @param int $maxPageNum set the maximum page number
+	 * @return array the statistics result
+	 */
 	public function getStatistics(int $maxPageNum=10): array
 	{
-		$monthCharSum			= [];
-		$monthMaxPost			= [];
-		$weekPostsSum			= [];
-		$userMonthPostsSum		= [];
+		$monthCharSum			= []; // sum of char per mounth
+		$monthMaxPost			= []; // the longest post per month
+		$weekPostsSum			= []; // som of posts per week number
+		$userMonthPostsSum		= []; // used for Average number of posts per user per month
 		$monthAvarage			= [];
 		$userPerMonthAverage	= [];
 		$userData				= [];
 		for($pageNumber	= 1; $pageNumber <= $maxPageNum; $pageNumber++) {
+			//Read page posts
 			$posts	= $this->repository->getPosts($pageNumber);
 			foreach ($posts as $post) {
+				//transer date to unix timestamp
 				$postTime					= strtotime($post['created_time']);
 				$month						= date('Y-m-F', $postTime);
 				$weekNumber					= date('YW', $postTime);
@@ -89,7 +116,7 @@ class SupermetricService implements SupermetricServiceInterface
 				'average_posts'	=> round(array_sum($data)/count($data), 2)
 			];
 		}
-		
+
 		return [
 			'avg_char'		=> $monthAvarage,
 			'month_longest'	=> array_values($monthMaxPost),
